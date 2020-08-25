@@ -57,13 +57,11 @@ void JITEngine::addObjectFiles(std::vector<object::ObjectFile *> &files,
   auto it = unresolvedSymbols.begin();
   while (it != unresolvedSymbols.end()) {
     std::string name = *it;
-    auto dlSymbol = dynamicLoader.getSymbol(name);
-    if (dlSymbol.getAddress() != 0) {
+    if (dynamicLoader.getSymbol(name)) {
       it = unresolvedSymbols.erase(it);
       continue;
     }
-    auto resolverSymbol = llvm_compat::JITSymbol(resolver.findSymbol(name));
-    if (llvm_compat::JITSymbolAddress(resolverSymbol) != 0) {
+    if (resolver.findSymbol(name)) {
       it = unresolvedSymbols.erase(it);
       continue;
     }
