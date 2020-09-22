@@ -8,10 +8,10 @@ using namespace mull::cxx;
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getLessThanToLessOrEqual() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::ICMP_SLTToICMP_SLE());
-  mutators.emplace_back(new irm::ICMP_ULTToICMP_ULE());
-  mutators.emplace_back(new irm::FCMP_OLTToFCMP_OLE());
-  mutators.emplace_back(new irm::FCMP_ULTToFCMP_ULE());
+  mutators.emplace_back(std::make_unique<irm::ICMP_SLTToICMP_SLE>());
+  mutators.emplace_back(std::make_unique<irm::ICMP_ULTToICMP_ULE>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_OLTToFCMP_OLE>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_ULTToFCMP_ULE>());
   return mutators;
 }
 
@@ -30,10 +30,10 @@ std::string LessOrEqualToLessThan::ID() {
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getLessOrEqualToLessThan() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::ICMP_SLEToICMP_SLT());
-  mutators.emplace_back(new irm::ICMP_ULEToICMP_ULT());
-  mutators.emplace_back(new irm::FCMP_OLEToFCMP_OLT());
-  mutators.emplace_back(new irm::FCMP_ULEToFCMP_ULT());
+  mutators.emplace_back(std::make_unique<irm::ICMP_SLEToICMP_SLT>());
+  mutators.emplace_back(std::make_unique<irm::ICMP_ULEToICMP_ULT>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_OLEToFCMP_OLT>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_ULEToFCMP_ULT>());
   return mutators;
 }
 
@@ -48,10 +48,10 @@ std::string GreaterThanToGreaterOrEqual::ID() {
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getGreaterThanToGreaterOrEqual() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::ICMP_SGTToICMP_SGE());
-  mutators.emplace_back(new irm::ICMP_UGTToICMP_UGE());
-  mutators.emplace_back(new irm::FCMP_OGTToFCMP_OGE());
-  mutators.emplace_back(new irm::FCMP_UGTToFCMP_UGE());
+  mutators.emplace_back(std::make_unique<irm::ICMP_SGTToICMP_SGE>());
+  mutators.emplace_back(std::make_unique<irm::ICMP_UGTToICMP_UGE>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_OGTToFCMP_OGE>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_UGTToFCMP_UGE>());
   return mutators;
 }
 
@@ -66,10 +66,10 @@ std::string GreaterOrEqualToGreaterThan::ID() {
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getGreaterOrEqualToGreaterThan() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::ICMP_SGEToICMP_SGT());
-  mutators.emplace_back(new irm::ICMP_UGEToICMP_UGT());
-  mutators.emplace_back(new irm::FCMP_OGEToFCMP_OGT());
-  mutators.emplace_back(new irm::FCMP_UGEToFCMP_UGT());
+  mutators.emplace_back(std::make_unique<irm::ICMP_SGEToICMP_SGT>());
+  mutators.emplace_back(std::make_unique<irm::ICMP_UGEToICMP_UGT>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_OGEToFCMP_OGT>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_UGEToFCMP_UGT>());
   return mutators;
 }
 
@@ -84,9 +84,9 @@ std::string EqualToNotEqual::ID() {
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getEqualToNotEqual() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::ICMP_EQToICMP_NE());
-  mutators.emplace_back(new irm::FCMP_OEQToFCMP_ONE());
-  mutators.emplace_back(new irm::FCMP_UEQToFCMP_UNE());
+  mutators.emplace_back(std::make_unique<irm::ICMP_EQToICMP_NE>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_OEQToFCMP_ONE>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_UEQToFCMP_UNE>());
   return mutators;
 }
 
@@ -101,9 +101,9 @@ std::string NotEqualToEqual::ID() {
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getNotEqualToEqual() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::ICMP_NEToICMP_EQ());
-  mutators.emplace_back(new irm::FCMP_ONEToFCMP_OEQ());
-  mutators.emplace_back(new irm::FCMP_UNEToFCMP_UEQ());
+  mutators.emplace_back(std::make_unique<irm::ICMP_NEToICMP_EQ>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_ONEToFCMP_OEQ>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_UNEToFCMP_UEQ>());
   return mutators;
 }
 
@@ -118,10 +118,10 @@ std::string GreaterThanToLessOrEqual::ID() {
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getGreaterThanToLessOrEqual() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::ICMP_SGTToICMP_SLE());
-  mutators.emplace_back(new irm::ICMP_UGTToICMP_ULE());
-  mutators.emplace_back(new irm::FCMP_OGTToFCMP_OLE());
-  mutators.emplace_back(new irm::FCMP_UGTToFCMP_ULE());
+  mutators.emplace_back(std::make_unique<irm::ICMP_SGTToICMP_SLE>());
+  mutators.emplace_back(std::make_unique<irm::ICMP_UGTToICMP_ULE>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_OGTToFCMP_OLE>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_UGTToFCMP_ULE>());
   return mutators;
 }
 
@@ -136,10 +136,10 @@ std::string GreaterOrEqualToLessThan::ID() {
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getGreaterOrEqualToLessThan() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::ICMP_SGEToICMP_SLT());
-  mutators.emplace_back(new irm::ICMP_UGEToICMP_ULT());
-  mutators.emplace_back(new irm::FCMP_OGEToFCMP_OLT());
-  mutators.emplace_back(new irm::FCMP_UGEToFCMP_ULT());
+  mutators.emplace_back(std::make_unique<irm::ICMP_SGEToICMP_SLT>());
+  mutators.emplace_back(std::make_unique<irm::ICMP_UGEToICMP_ULT>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_OGEToFCMP_OLT>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_UGEToFCMP_ULT>());
   return mutators;
 }
 
@@ -154,10 +154,10 @@ std::string LessThanToGreaterOrEqual::ID() {
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getLessThanToGreaterOrEqual() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::ICMP_SLTToICMP_SGE());
-  mutators.emplace_back(new irm::ICMP_ULTToICMP_UGE());
-  mutators.emplace_back(new irm::FCMP_OLTToFCMP_OGE());
-  mutators.emplace_back(new irm::FCMP_ULTToFCMP_UGE());
+  mutators.emplace_back(std::make_unique<irm::ICMP_SLTToICMP_SGE>());
+  mutators.emplace_back(std::make_unique<irm::ICMP_ULTToICMP_UGE>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_OLTToFCMP_OGE>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_ULTToFCMP_UGE>());
   return mutators;
 }
 
@@ -172,10 +172,10 @@ std::string LessOrEqualToGreaterThan::ID() {
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getLessOrEqualToGreaterThan() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::ICMP_SLEToICMP_SGT());
-  mutators.emplace_back(new irm::ICMP_ULEToICMP_UGT());
-  mutators.emplace_back(new irm::FCMP_OLEToFCMP_OGT());
-  mutators.emplace_back(new irm::FCMP_ULEToFCMP_UGT());
+  mutators.emplace_back(std::make_unique<irm::ICMP_SLEToICMP_SGT>());
+  mutators.emplace_back(std::make_unique<irm::ICMP_ULEToICMP_UGT>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_OLEToFCMP_OGT>());
+  mutators.emplace_back(std::make_unique<irm::FCMP_ULEToFCMP_UGT>());
   return mutators;
 }
 
