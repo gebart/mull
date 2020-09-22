@@ -7,9 +7,9 @@ using namespace mull::cxx;
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getNumberMutators() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::StoreIntReplacement(42));
-  mutators.emplace_back(new irm::StoreDoubleReplacement(42));
-  mutators.emplace_back(new irm::StoreFloatReplacement(42));
+  mutators.emplace_back(std::make_unique<irm::StoreIntReplacement>(42));
+  mutators.emplace_back(std::make_unique<irm::StoreDoubleReplacement>(42));
+  mutators.emplace_back(std::make_unique<irm::StoreFloatReplacement>(42));
   return mutators;
 }
 
