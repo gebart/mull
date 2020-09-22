@@ -7,7 +7,7 @@ using namespace mull::cxx;
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getLLShiftToLRShift() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::ShlToLShr());
+  mutators.emplace_back(std::make_unique<irm::ShlToLShr>());
   return mutators;
 }
 
@@ -31,8 +31,8 @@ LShiftAssignToRShiftAssign::LShiftAssignToRShiftAssign()
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getRShiftToLShift() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::LShrToShl());
-  mutators.emplace_back(new irm::AShrToShl());
+  mutators.emplace_back(std::make_unique<irm::LShrToShl>());
+  mutators.emplace_back(std::make_unique<irm::AShrToShl>());
   return mutators;
 }
 
@@ -57,7 +57,7 @@ RShiftAssignToLShiftAssign::RShiftAssignToLShiftAssign()
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getOrToAnd() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::OrToAnd());
+  mutators.emplace_back(std::make_unique<irm::OrToAnd>());
   return mutators;
 }
 
@@ -80,7 +80,7 @@ OrAssignToAndAssign::OrAssignToAndAssign()
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getAndToOr() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::AndToOr());
+  mutators.emplace_back(std::make_unique<irm::AndToOr>());
   return mutators;
 }
 
@@ -103,7 +103,7 @@ AndAssignToOrAssign::AndAssignToOrAssign()
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getXorToOr() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::XorToOr());
+  mutators.emplace_back(std::make_unique<irm::XorToOr>());
   return mutators;
 }
 
