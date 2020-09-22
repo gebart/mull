@@ -9,9 +9,9 @@ using namespace mull::cxx;
 /// All add to sub mutators share the same set of low level mutators
 static std::vector<std::unique_ptr<irm::IRMutation>> getAddToSub() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::AddToSub());
-  mutators.emplace_back(new irm::FAddToFSub());
-  mutators.emplace_back(new irm::sadd_with_overflowTossub_with_overflow());
+  mutators.emplace_back(std::make_unique<irm::AddToSub>());
+  mutators.emplace_back(std::make_unique<irm::FAddToFSub>());
+  mutators.emplace_back(std::make_unique<irm::sadd_with_overflowTossub_with_overflow>());
   return mutators;
 }
 
@@ -54,9 +54,9 @@ PreIncToPreDec::PreIncToPreDec()
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getSubToAdd() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::SubToAdd());
-  mutators.emplace_back(new irm::FSubToFAdd());
-  mutators.emplace_back(new irm::ssub_with_overflowTosadd_with_overflow());
+  mutators.emplace_back(std::make_unique<irm::SubToAdd>());
+  mutators.emplace_back(std::make_unique<irm::FSubToFAdd>());
+  mutators.emplace_back(std::make_unique<irm::ssub_with_overflowTosadd_with_overflow>());
   return mutators;
 }
 
@@ -79,9 +79,9 @@ SubAssignToAddAssign::SubAssignToAddAssign()
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getDecToInc() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::SubToAdd());
-  mutators.emplace_back(new irm::FSubToFAdd());
-  mutators.emplace_back(new irm::ssub_with_overflowTosadd_with_overflow());
+  mutators.emplace_back(std::make_unique<irm::SubToAdd>());
+  mutators.emplace_back(std::make_unique<irm::FSubToFAdd>());
+  mutators.emplace_back(std::make_unique<irm::ssub_with_overflowTosadd_with_overflow>());
 
   /// This is somewhat non-trivial:
   /// pre and post decrements lowered to IR as
@@ -90,7 +90,7 @@ static std::vector<std::unique_ptr<irm::IRMutation>> getDecToInc() {
   ///     sub x, 1
   /// So we have to consider add instructions as the one producing sub-to-add
   /// mutations
-  mutators.emplace_back(new irm::AddToSub());
+  mutators.emplace_back(std::make_unique<irm::AddToSub>());
   return mutators;
 }
 
@@ -116,8 +116,8 @@ PreDecToPreInc::PreDecToPreInc()
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getMulToDiv() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::MulToSDiv());
-  mutators.emplace_back(new irm::FMulToFDiv());
+  mutators.emplace_back(std::make_unique<irm::MulToSDiv>());
+  mutators.emplace_back(std::make_unique<irm::FMulToFDiv>());
   return mutators;
 }
 
@@ -142,9 +142,9 @@ MulAssignToDivAssign::MulAssignToDivAssign()
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getDivToMul() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::FDivToFMul());
-  mutators.emplace_back(new irm::SDivToMul());
-  mutators.emplace_back(new irm::UDivToMul());
+  mutators.emplace_back(std::make_unique<irm::FDivToFMul>());
+  mutators.emplace_back(std::make_unique<irm::SDivToMul>());
+  mutators.emplace_back(std::make_unique<irm::UDivToMul>());
   return mutators;
 }
 
@@ -169,9 +169,9 @@ DivAssignToMulAssign::DivAssignToMulAssign()
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getRemToDiv() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::FRemToFDiv());
-  mutators.emplace_back(new irm::SRemToSDiv());
-  mutators.emplace_back(new irm::URemToUDiv());
+  mutators.emplace_back(std::make_unique<irm::FRemToFDiv>());
+  mutators.emplace_back(std::make_unique<irm::SRemToSDiv>());
+  mutators.emplace_back(std::make_unique<irm::URemToUDiv>());
   return mutators;
 }
 
@@ -194,7 +194,7 @@ RemAssignToDivAssign::RemAssignToDivAssign()
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getBitNotToNoop() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::XorToAnd);
+  mutators.emplace_back(std::make_unique<irm::XorToAnd>());
   return mutators;
 }
 
@@ -213,8 +213,8 @@ std::string UnaryMinusToNoop::ID() {
 }
 
 UnaryMinusToNoop::UnaryMinusToNoop() {
-  lowLevelMutators.emplace_back(new irm::SwapSubOperands);
-  lowLevelMutators.emplace_back(new irm::SwapFSubOperands);
+  lowLevelMutators.emplace_back(std::make_unique<irm::SwapSubOperands>());
+  lowLevelMutators.emplace_back(std::make_unique<irm::SwapFSubOperands>());
 }
 
 std::string UnaryMinusToNoop::getUniqueIdentifier() {
