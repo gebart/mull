@@ -5,7 +5,7 @@ using namespace mull::cxx;
 
 static std::vector<std::unique_ptr<irm::IRMutation>> getMutators() {
   std::vector<std::unique_ptr<irm::IRMutation>> mutators;
-  mutators.emplace_back(new irm::NegateXORReplacement);
+  mutators.emplace_back(std::make_unique<irm::NegateXORReplacement>());
   return mutators;
 }
 
