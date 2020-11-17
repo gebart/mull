@@ -13,8 +13,8 @@ JITEngine::JITEngine(Diagnostics &diagnostics)
 void JITEngine::addObjectFiles(std::vector<object::ObjectFile *> &files,
                                llvm_compat::SymbolResolver &resolver,
                                std::unique_ptr<llvm::RuntimeDyld::MemoryManager> memManager) {
-  std::vector<object::ObjectFile *>().swap(objectFiles);
-  llvm::StringMap<llvm::JITSymbol>().swap(symbolTable);
+  objectFiles = {};
+  symbolTable = {};
   memoryManager = std::move(memManager);
 
   std::unordered_set<std::string> unresolvedSymbols;
@@ -38,7 +38,7 @@ void JITEngine::addObjectFiles(std::vector<object::ObjectFile *> &files,
       }
       unresolvedSymbols.erase(name);
       auto flags = llvm_compat::JITSymbolFlagsFromObjectSymbol(symbol);
-      symbolTable.insert(std::make_pair(name, llvm::JITSymbol(0, flags)));
+      symbolTable.insert({ name, llvm::JITSymbol(0, flags) });
     }
   }
 
@@ -78,16 +78,18 @@ void JITEngine::addObjectFiles(std::vector<object::ObjectFile *> &files,
       it = unresolvedSymbols.erase(it);
       continue;
     }
+    // NB: Don't put this increment inside the for loop declaration. Only increment if we did not
+    // already erase.
     ++it;
   }
 
   if (!unresolvedSymbols.empty()) {
-    std::stringstream stringstream;
-    stringstream << "JIT engine could not resolve the following symbols:\n";
+    std::ostringstream ss;
+    ss << "JIT engine could not resolve the following symbols:\n";
     for (const std::string &name : unresolvedSymbols) {
-      stringstream << name << "\n";
+      ss << name << "\n";
     }
-    diagnostics.warning(stringstream.str());
+    diagnostics.warning(ss.str());
   }
 }
 
