@@ -32,13 +32,13 @@ void JITEngine::addObjectFiles(std::vector<object::ObjectFile *> &files,
       std::string name = nameOrError.get();
       if (symbol.getFlags() & object::SymbolRef::SF_Undefined) {
         if (!(symbol.getFlags() & object::SymbolRef::SF_Weak)) {
-          unresolvedSymbols.insert(name);
+          unresolvedSymbols.insert(std::move(name));
         }
         continue;
       }
       unresolvedSymbols.erase(name);
       auto flags = llvm_compat::JITSymbolFlagsFromObjectSymbol(symbol);
-      symbolTable.insert({ name, llvm::JITSymbol(0, flags) });
+      symbolTable.insert({ std::move(name), llvm::JITSymbol(0, flags) });
     }
   }
 
