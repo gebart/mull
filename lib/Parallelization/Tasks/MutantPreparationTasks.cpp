@@ -39,9 +39,8 @@ void DeleteOriginalFunctionsTask::operator()(iterator begin, iterator end,
 }
 
 void DeleteOriginalFunctionsTask::deleteFunctions(Bitcode &bitcode) {
-  for (auto pair : bitcode.getMutationPointsMap()) {
-    auto original = pair.first;
-    auto anyPoint = pair.second.front();
+  for (auto &[original, mutationPointsInFunction] : bitcode.getMutationPointsMap()) {
+    auto anyPoint = mutationPointsInFunction.front();
 
     llvm::ValueToValueMapTy map;
     auto originalCopy = CloneFunction(original, map);
