@@ -1,6 +1,8 @@
 #include "mull/Toolchain/JITEngine.h"
 #include "mull/Diagnostics/Diagnostics.h"
 
+#include <llvm/ExecutionEngine/JITEventListener.h>
+
 #include <sstream>
 #include <unordered_set>
 
@@ -8,7 +10,8 @@ using namespace mull;
 using namespace llvm;
 
 JITEngine::JITEngine(Diagnostics &diagnostics)
-    : diagnostics(diagnostics), symbolNotFound(nullptr) {}
+    : diagnostics(diagnostics), symbolNotFound(nullptr),
+      debugListener(llvm::JITEventListener::createGDBRegistrationListener()) {}
 
 void JITEngine::addObjectFiles(std::vector<object::ObjectFile *> &files,
                                llvm_compat::SymbolResolver &resolver,
@@ -43,13 +46,14 @@ void JITEngine::addObjectFiles(std::vector<object::ObjectFile *> &files,
   }
 
   RuntimeDyld dynamicLoader(*memoryManager, resolver);
-  dynamicLoader.setProcessAllSections(false);
+  dynamicLoader.setProcessAllSections(true);
 
   for (auto &object : objectFiles) {
     std::ostringstream ss;
     ss << "Load object " << object->getFileName().str();
     diagnostics.debug(ss.str());
-    dynamicLoader.loadObject(*object);
+    auto objInfo = dynamicLoader.loadObject(*object);
+    debugListener->notifyObjectLoaded(reinterpret_cast<llvm::JITEventListener::ObjectKey>(&*object), *object, *objInfo);
   }
 
   for (auto &entry : symbolTable) {

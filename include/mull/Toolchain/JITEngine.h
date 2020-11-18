@@ -2,6 +2,13 @@
 
 #include "LLVMCompatibility.h"
 
+#include <memory>
+#include <vector>
+
+namespace llvm {
+class JITEventListener;
+}
+
 namespace mull {
 
 class Diagnostics;
@@ -22,6 +29,7 @@ private:
   llvm::StringMap<llvm::JITSymbol> symbolTable;
   llvm::JITSymbol symbolNotFound;
   std::unique_ptr<llvm::RuntimeDyld::MemoryManager> memoryManager;
+  llvm::JITEventListener *debugListener;
 };
 
 } // namespace mull
